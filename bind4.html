@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap.css">
+    <script src="./vue.js"></script>
+    <script src="./vue-resource-1.3.4.js"></script>
+    <script src="./moment.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">添加品牌</h3>
+            </div>
+            <div class="panel-body form-inline">
+                <!-- <label>
+                    id:
+                    <input type="text" v-model="id">
+                </label> -->
+                <label>
+                    name:
+                    <input type="text" v-model="name">
+                </label>
+                <input type="button" value="添加" class="btn btn-primary" @click="add">
+            </div>
+
+        </div>
+
+
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Ctime</th>
+                    <th>Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in products" :key="item.id">
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.ctime | dateformat("YYYY-MM-DD HH:mm:ss")}}</td>
+                    <td>
+                        <a href="" @click.prevent="del(item.id)">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <script>
+        //封装全局根路径
+       Vue.http.options.root ="http://vue.lovegf.cn:8899/api"
+       Vue.http.options.emulateJSON =true
+         //定义全局过滤器  str这个形参没传值就为空，不会报错
+         Vue.filter("dateformat",function(datestr,str=""){
+         return  moment(datestr).format(str)
+        })
+
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                //自动递增 不用写
+                // id:"",
+                name:"",
+                products: [
+                  
+                ]
+            },
+            created(){
+                //调用数据
+                this.getProducts()
+            },
+            methods: {
+                //获取数据库中的数据
+                getProducts() {
+                    this.$http.get("getprodlist").then(result=>{
+                        if(result.body.status === 0){
+                            this.products =result.body.message
+                        }else{
+                            alert("获取数据失败")
+                        }
+                    })
+                },
+                add() {
+                   if(!this.name.trim()) return alert("请输入品牌名称")
+                  this.$http.post("addproduct",{name:this.name}).then(result=>{
+                     if(result.body.status === 0){
+                         this.getProducts()
+                         this.name = ''
+                     }else{
+                         alert("添加数据失败")
+                     }
+                  })
+                },
+                del(id){
+                    this.$http.get("delproduct/"+id).then(result=>{
+                      if(result.body.status === 0){
+                          this.getProducts()
+                      }else{
+                          alert("删除数据失败")
+                      }
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
