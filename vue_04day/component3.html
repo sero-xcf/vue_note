@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <template id="tmp">
+
+            <h3>哈哈哈</h3>
+            <p>hello world</p>
+        </template>
+    </div>
+    <div id="app2">
+
+        <login></login>
+    </div>
+    <template id="tmp2">
+        <div>
+            <h1>这是私有login组件</h1>
+            <p>呵呵呵</p>
+        </div>
+
+
+    </template>
+    <script>
+        //注册组件
+        Vue.component("count", {
+            template: "#tmp"
+        })
+        let vm = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            methods: {
+
+            }
+        })
+        let vm2 = new Vue({
+            el: "#app2",
+            data: {
+
+            },
+            methods: {
+
+            },
+            //私有组件
+            components: {
+                login: {
+                    template: "#tmp2"
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

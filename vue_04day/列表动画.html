@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+    <style>
+
+        li{
+            list-style: none;
+            height: 30px;
+            line-height: 30px;
+            margin-top: 5px;
+            border:1px dashed #999;
+            padding-left:10px
+
+        }
+        li:hover{
+            background-color:red;
+            transition: all 1s ease
+        }
+        .v-enter,
+        .v-leave-to{
+            opacity:0;
+            transform: translateY(100px)
+        }
+        .v-enter-active,
+        .v-leave-active{
+            transition: all 1s ease
+        }
+        /* 使用v-move可以实现后续元素慢慢飘上来的效果 */
+        .v-move{
+            transition: all 1s ease
+        }
+        /* 防止删除元素的时候 下面的元素不占位置 */
+        .v-leave-active{
+            position: absolute;
+        }
+
+       
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <label>
+                id:
+                <input type="text" v-model="id">
+            </label>
+            <label>
+                name:
+                <input type="text" v-model="name">
+            </label>
+            <input type="button" value="添加" @click="add">
+        </div>
+        <!-- appear 实现页面一上来展示的效果 tag可以指定元素渲染的标签属性 不设置默认是span标签 -->
+         <transition-group appear tag="ul" >
+                <li v-for="(item,i) in list" :key="item.id" @click="del(i)">
+                        {{item.id}} --- {{item.name}}
+                    </li>
+         </transition-group>
+       
+
+    </div>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                id: "",
+                name: "",
+                list: [{
+                        id: 1,
+                        name: "赵云"
+                    },
+                    {
+                        id: 2,
+                        name: "马超"
+                    },
+                    {
+                        id: 3,
+                        name: "关羽"
+                    },
+                    {
+                        id: 4,
+                        name: "刘备"
+                    }
+                ]
+            },
+            methods: {
+                
+                add() {
+                    if(!this.id.trim()) return alert("请输入id号")
+                    if(!this.name.trim()) return alert("请输入品牌名称")
+                    
+                    this.list.push({
+                        id: this.id,
+                        name: this.name
+                    })
+                    this.id =""
+                    this.name =""
+                },
+                del(i){
+                    this.list.splice(i,1)
+                   
+                }
+
+            }
+
+        })
+    </script>
+</body>
+
+</html>

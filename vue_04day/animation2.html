@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+    <style>
+        .my-enter,
+        .my-leave-to{
+            opacity: 0;
+          transform:translateY(200px);
+        }
+      
+     
+          
+     
+      .my-enter-active,
+      .my-leave-active{
+          transition: all 0.8s ease;
+      }
+      
+    
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="开关" @click="flag=!flag" >
+        <transition name="my">
+            <h3 v-show="flag">这是一个h3</h3>
+        </transition>
+
+    </div>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                flag: false
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>
