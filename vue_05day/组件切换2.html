@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+        <script src="./vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <a href="" @click.prevent="comName='login'">登录</a>
+            <a href="" @click.prevent="comName='register'">注册</a>
+            <!-- component是一个占位符 :is指定要展示数据的名称 -->
+            <component :is="comName"></component>
+            <!-- <login v-if="flag"></login>
+            <register v-else="flag"></register> -->
+        </div>
+        <template id="tpm1">
+            <div>
+                <h1>登录组件</h1>
+            </div>
+        </template>
+        <template id="tpm2">
+                <div>
+                    <h1>注册组件</h1>
+                </div>
+            </template>
+        <script>
+            Vue.component("login",{
+                template:"#tpm1",
+               
+
+            })
+            Vue.component("register",{
+                template:"#tpm2",
+
+            })
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                  comName:"login"
+                }
+            })
+        </script>
+    </body>
+</html>

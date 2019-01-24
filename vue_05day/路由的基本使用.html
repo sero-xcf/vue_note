@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+        <script src="./vue.js"></script>
+        <script src="./vue-router-3.0.1.js"></script>
+        <style>
+          .router-link-active,.myactive{
+             color:pink;
+             background-color:hotpink;
+             padding: 2px;
+             border:1px solid hotpink;
+             border-radius:5px;
+          }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <!-- router link 相当于就是一个a标签 -->
+            <router-link to="/login" >登录</router-link>
+            <router-link to="/register" >注册</router-link>
+            <router-view></router-view> 
+        </div>
+        <script>
+            var login ={
+                template:"<h1>注册组件</h1>"
+            }
+            var register ={
+                template:"<h1>登录组件</h1>"
+            }
+            var routerObj =new VueRouter({
+               routes:[
+                //    redirect 重定向 可以帮助页面直接显示首页
+                   {path:"/",redirect:"/login"},
+                   {path:"/login",component:login},
+                   {path:"/register",component:register}
+               ],
+            //  linkActiveClass可以修改默认样式 router-link-active 
+               linkActiveClass:"myactive"
+
+            })
+            var vm = new Vue({
+                el: '#app',
+                data: {
+
+                },
+                router:routerObj
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+    <script src="./vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <com2 @func="show"></com2>
+    </div>
+    <template id="tpm2">
+        <div>
+            <h3>外星人</h3>
+            <input type="button" value="按钮" @click="myclick">
+        </div>
+
+    </template>
+    <script>
+        var com2 = {
+            template: "#tpm2",
+            data() {
+                return {
+                    sonmsg: {
+                        name: "zs",
+                        age: 12
+                    }
+                }
+            },
+            methods: {
+                myclick() {
+                    // emit触发 vue中提供的方法
+                    this.$emit("func", this.sonmsg)
+                }
+            }
+        }
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                datamsgFormSon: null
+            },
+            methods: {
+                show(data) {
+                    console.log("传智播客")
+                    console.log(data)
+                    this.datamsgFormSon = data
+                }
+            },
+            components: {
+                com2
+            }
+        })
+    </script>
+</body>
+
+</html>

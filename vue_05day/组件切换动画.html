@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+        <script src="./vue.js"></script>
+        <style>
+           .v-enter,
+           .v-leave-to{
+               opacity: 0;
+               transform: translateX(150px);
+           }
+           .v-enter-active,
+           .v-leave-active{
+              
+               transition:all 0.5s ease
+           }
+        
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <a href="" @click.prevent="comName='login'">登录</a>
+            <a href="" @click.prevent="comName='register'">注册</a>
+            <!-- component是一个占位符 :is指定要展示数据的名称 -->
+            <!-- 通过mode属性 设置组件切换时的模式 -->
+            <transition mode="out-in">
+                    <component :is="comName"></component>
+            </transition>
+           
+            <!-- <login v-if="flag"></login>
+            <register v-else="flag"></register> -->
+        </div>
+        <template id="tpm1">
+            <div>
+                <h1>登录组件</h1>
+            </div>
+        </template>
+        <template id="tpm2">
+                <div>
+                    <h1>注册组件</h1>
+                </div>
+            </template>
+        <script>
+            Vue.component("login",{
+                template:"#tpm1",
+               
+
+            })
+            Vue.component("register",{
+                template:"#tpm2",
+
+            })
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                  comName:"login"
+                }
+            })
+        </script>
+    </body>
+</html>
