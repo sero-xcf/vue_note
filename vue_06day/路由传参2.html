@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+    <script src="./vue.js"></script>
+    <script src="./vue-router-3.0.1.js"></script>
+    <style>
+        li {
+            list-style: none;
+            height: 80px;
+
+            padding-left: 10px;
+            border: 1px dashed #999;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/category"></router-link>
+        <router-view></router-view>
+
+    </div>
+    <template id="tpm1">
+        <div>
+            <h1>首页</h1>
+             <!-- 如果是以？id=1@name=zs 这种方式 则不需要修改路由规则  -->
+               <!-- 如果是以/:id/:name=1 这种方式 则需要修改路由规则 匹配 -->
+             
+            <!-- <li v-for="item in list" :key="item.id"> -->
+                <!-- to前面冒号属于属性绑定 方便后面写js逻辑 因为里面有变量 需要字符串拼接  如果不加说明里面是一个纯字符串的文本-->
+                <router-link v-for="item in list" :key="item.id" tag="li" :to="'/category/' + item.id">
+                    <p>姓名:{{item.name}}</p>
+                    <p> 年龄:{{item.age}}</p>
+                </router-link>
+
+            <!-- </li> -->
+
+
+
+        </div>
+    </template>
+    <template id="tpm2">
+        <div>
+            
+            <h1>分类页面---{{$route.query.id}} ---{{$route.params.id}}</h1>
+        </div>
+    </template>
+    <script>
+        var index = {
+            template: "#tpm1",
+            data() {
+                return {
+                    list: [{
+                            id: 1,
+                            name: "zs",
+                            age: 12
+                        },
+                        {
+                            id: 2,
+                            name: "ls",
+                            age: 34
+                        },
+                        {
+                            id: 3,
+                            name: "ww",
+                            age: 18
+                        },
+                        {
+                            id: 4,
+                            name: "zl",
+                            age: 86
+                        }
+
+                    ]
+                }
+            }
+        }
+        var category = {
+            template: "#tpm2"
+        }
+        var router = new VueRouter({
+            routes: [{
+                    path: "/",
+                    redirect: "/index"
+                },
+                {
+                    path: "/index",
+                    component: index
+                },
+                {
+                    path: "/category/:id",
+                    component: category
+                },
+            ]
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            router: router
+        })
+    </script>
+</body>
+
+</html>

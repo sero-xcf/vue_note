@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+        <script src="./vue.js"></script>
+        <script src="./vue-router-3.0.1.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <router-link to="/login?id=10&name=zs">登录</router-link>
+            <router-link to="/register">注册</router-link>
+            <router-view></router-view>
+        </div>
+        <template id="tpm1">
+            <h1>登录组件---{{this.$route.query.id}}---{{this.$route.query.name}}</h1>
+        </template>
+        <template id="tpm2">
+                <h1>注册组件</h1>
+        </template>
+        <script>
+            var login ={
+                template:"#tpm1",
+                created(){
+                  console.log(this.$route)
+                  console.log(this.$route.query.id)    
+                }
+            }
+            var register ={
+                template:"#tpm2"
+            }
+            var router = new VueRouter({
+                routes:[
+                    {path:"/login",component:login},
+                    {path:"/register",component:register}
+                ]
+            })
+            var vm = new Vue({
+                el: '#app',
+                data: {
+
+                },
+               
+                router:router
+
+            })
+        </script>
+    </body>
+</html>

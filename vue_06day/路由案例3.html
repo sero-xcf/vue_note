@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+        <script src="./vue.js"></script>
+        <script src="./vue-router-3.0.1.js"></script>
+        <style>
+          li{
+              list-style: none;
+              height: 30px;
+              line-height: 30px;
+              border:1px dashed #999;
+              margin-top: 10px;
+              padding-left: 10px;
+          }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+           
+            <router-view></router-view>
+        </div>
+        <template id="index">
+            <div>
+              
+                   <router-link tag="li" v-for="item in list" :key="item.id" :to="'/category/' + item.id">
+                        {{item.title}} ----{{item.content}}
+                   </router-link>
+                  
+             
+            </div>
+        </template>
+        <template id="category">
+                <div>
+                    <h1>分类页面---{{$route.query.id}}---{{$route.params.id}}</h1>
+                </div>
+            </template>
+        <script>
+            var index={
+                template:"#index",
+                data(){
+                    return {
+                       list:[
+                           {id:1,title:"湖北武汉",content:"美食城"},
+                           {id:2,title:"湖南长沙",content:"娱乐城"},
+                           {id:3,title:"广州深圳",content:"工业城"}
+                       ]
+                    }
+                },
+               
+            }
+            var category={
+                template:"#category",
+                created(){
+                //   console.log(this.$route.query.id)
+                  console.log(this.$route.params.id)    
+                }
+            }
+            var router =new VueRouter({
+                routes:[
+                    {path:"/",redirect:"/index"},
+                    {path:"/index",component:index},
+                    {path:"/category/:id",component:category},
+                ]
+            })
+            var vm = new Vue({
+                el: '#app',
+                data: {
+         
+                },
+                router:router
+            })
+        </script>
+    </body>
+</html>
